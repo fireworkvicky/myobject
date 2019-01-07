@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     <ul class="nav navbar-nav navbar-right layout-header-nav clearfix">
+        <li class="layout-header-nav-item">
+          <a href="{% url 'index' %}" class="layout-header-nav-link">网站首页</a><p class="line-top hidden-xs"></p>
+        </li>
+        <li class="layout-header-nav-item"><a href="{% url 'list' %}" class="layout-header-nav-link">全部商品</a></li>
+
+        {% for type in typelist %}
+        <li class="layout-header-nav-item">
+          <a href="{% url 'list' %}?tid={{ type.id }}" class="layout-header-nav-link">{{ type.name }}</a>
+        </li>
+        {% endfor %}
+
+        <li class="layout-header-nav-item"><a href="#" class="layout-header-nav-link">社区</a></li>
+    </ul>
+
+     <li class="layout-header-service-item layout-header-service-cart" id="layoutHeaderCart">
+        <a class="layout-header-service-link" href="{% url 'cart_index' %}" data-mtype="wmz_public_yt_cart">
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            <span class="layout-header-service-cart-num">{{ request.session.shoplist|length}}</span>
+        </a>
+    </li>
+
+    <li class="layout-header-service-item" id="layoutHeaderUser">
+        <a class="layout-header-service-link g-user" style="background: #fff;width:auto;" href="#">
+          <i class="glyphicon glyphicon-user"></i>
+          <span>{{request.session.vipuser.name}}</span>
+        </a>
+        <div class="layout-user-downmenu">
+          <ul class="layout-user-downmenu-list">
+          {% if request.session.vipuser %}
+            <li class="layout-user-downmenu-item">
+              <a href="#" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">个人中心</a>
+            </li>
+            <li class="layout-user-downmenu-item">
+              <a href="#" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_myorder">我的订单</a>
+            </li>
+            <li class="layout-user-downmenu-item">
+              <a href="{% url 'logout' %}" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_mformy">退出</a>
+            </li>
+          {% else %}
+            <li class="layout-user-downmenu-item">
+              <a href="{% url 'login'%}" class="layout-user-downmenu-link">立即登录</a>
+            </li>
+            <li class="layout-user-downmenu-item">
+              <a href="#" target="_blank" class="layout-user-downmenu-link" data-mtype="wmz_public_grzx_register">立即注册</a>
+            </li>
+          {% endif %}
+          </ul>
+        </div>
+    </li>
+</body>
+</html>

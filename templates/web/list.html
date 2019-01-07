@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 商品列表 -->
+      <div class="goods-list">
+        <div class="row">
+         {% for goods in goodslist %}
+          <div class="col-md-3 col-sm-6 col-xs-6">
+            <div class="gl-item">
+              <div class="compare-btn-list" >
+                  <i class="iconfont  icon-duibi compare-duibi"></i>
+                  <span class="hidden-xs hidden-sm">对比</span>
+              </div>
+              <div class="gl-item-wrap">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active mod-pic" id="list-p1">
+                    <a href="{% url 'detail' goods.id %}">
+                      <img class="lazy j-modProduct" src="/static/goods/m_{{ goods.picname }}" width="220" height="220">
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Nav tabs -->
+                <div class="item-slide j-pro-wrap  hidden-xs hidden-sm">
+                  <ul class="nav nav-tabs  " role="tablist">
+                    <li role="presentation" class="active">
+                      <a href="#list-p1" aria-controls="list-p1" role="tab" data-toggle="tab">
+                        <img class="lazy"  src="/static/goods/s_{{ goods.picname }}" style="display: inline;" width="40" height="40">
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="slide-btn j-modBtns" style="display: none;">
+                    <span  class="prev iconfont disabled"></span>
+                    <span  class="next iconfont"></span>
+                </div>
+
+                <h2>{{ goods.goods}}</h2>
+                <h3 class="red" title="双11促销：满500，减100！">
+                双11促销：满500，减100！
+                </h3>
+                <dd class="mod-price">
+                    <span>￥</span>
+                    <span class="vm-price">{{ goods.price }}</span>
+                    <span class="vm-start">起</span>
+                </dd>
+              </div>
+            </div>
+          </div>
+         {% endfor %}
+        </div>
+      </div>
+      <!-- 商品列表 -->
+
+      <nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+          <li>
+            <a href="{% url 'list' pIndex|add:-1 %}?{{ mywhere|join:'&' }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% for p in plist %}
+            <li {% if pIndex == p %}class="active"{% endif %}>
+              <a href="{% url 'list' p %}?{{ mywhere|join:'&' }}">{{p}}</a>
+            </li>
+          {% endfor %}
+          <li>
+            <a href="{% url 'list' pIndex|add:1 %}?{{ mywhere|join:'&' }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+</body>
+</html>
